@@ -5,7 +5,7 @@ body {
   background-color: #ffffff;
 }
 
-/* Top white bar */
+/* ===== TOP WHITE BAR (logo lives here) ===== */
 .site-header {
   background: #ffffff;
   padding: 14px 24px;
@@ -18,28 +18,30 @@ body {
   display: block;
 }
 
-/* Hero */
+/* ===== HERO ===== */
 .hero {
-  background-position: right center;
+  /* photo */
   background-image: url("img/boy.jpeg");
   background-size: cover;
-
-  /* IMPORTANT: 2 values = (x y)
-     This keeps the boy’s face from getting cut off vertically */
-  background-position: right 35%;
+  background-position: right center;
 
   min-height: 420px;
 
+  /* IMPORTANT:
+     Reserve space on the RIGHT so text can NEVER reach the boy.
+     This is what stops the “sliding over his face” problem. */
   padding: 32px 24px;
-  padding-right: 48%; /* reserves the right side for the photo */
+  padding-right: 48%;
   position: relative;
 }
 
-/* Yellow overlay */
+/* yellow overlay layer */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
+
+  /* overlay stronger on left, fades right */
   background: linear-gradient(
     90deg,
     rgba(247, 201, 72, 0.86) 0%,
@@ -48,10 +50,11 @@ body {
   );
 }
 
-/* Content above overlay */
+/* keep content above overlay */
 .hero-content {
   position: relative;
   z-index: 1;
+
   max-width: 560px;
 }
 
@@ -85,13 +88,14 @@ body {
   background-color: #0E4A73;
 }
 
-/* Responsive */
+/* ===== Responsive ===== */
+
+/* Tablet and up */
 @media (min-width: 700px) {
   .hero {
     min-height: 480px;
     padding: 56px 64px;
     padding-right: 46%;
-    background-position: right 35%;
   }
 
   .hero h1 {
@@ -99,13 +103,41 @@ body {
   }
 }
 
+/* Small screens:
+   Keep reserving space so text NEVER hits the face.
+   If it gets VERY small, we remove the reserved space and instead
+   give the text its own readable background block. */
 @media (max-width: 600px) {
   .hero {
     padding-right: 52%;
-    background-position: right 30%;
+    background-position: right center;
   }
 
   .hero h1 {
     font-size: 30px;
+  }
+}
+
+/* Extra-small phones: “bulletproof” mode */
+@media (max-width: 420px) {
+  .hero {
+    padding-right: 24px; /* stop squeezing the text too much */
+  }
+
+  .hero-content {
+    background: rgba(247, 201, 72, 0.82);
+    padding: 16px;
+    border-radius: 12px;
+    max-width: 100%;
+  }
+
+  /* make overlay lighter since the text block has its own background */
+  .hero::before {
+    background: linear-gradient(
+      90deg,
+      rgba(247, 201, 72, 0.55) 0%,
+      rgba(247, 201, 72, 0.25) 55%,
+      rgba(247, 201, 72, 0.00) 85%
+    );
   }
 }
